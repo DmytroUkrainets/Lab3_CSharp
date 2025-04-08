@@ -1,4 +1,5 @@
 ﻿using Lab3.Exceptions;
+using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
 
 namespace Lab3.Models
@@ -30,6 +31,7 @@ namespace Lab3.Models
                 if (value < DateTime.Now.AddYears(-135)) 
                     throw new TooOldDateOfBirthException();
                 _dateOfBirth = value;
+                CalculateProperties();
             }
         }
 
@@ -38,6 +40,8 @@ namespace Lab3.Models
         public string ChineseSign { get; private set; }
         public bool IsBirthday { get; private set; }
 
+
+        [JsonConstructor]
         public Person(string firstName, string lastName, string email, DateTime birthDate)
         {
             FirstName = firstName;
@@ -48,11 +52,6 @@ namespace Lab3.Models
             CalculateProperties();
         }
 
-        public Person(string firstName, string lastName, string email)
-            : this(firstName, lastName, email, DateTime.MinValue) { }
-
-        public Person(string firstName, string lastName, DateTime birthDate)
-            : this(firstName, lastName, string.Empty, birthDate) { }
 
         private void CalculateProperties()
         {

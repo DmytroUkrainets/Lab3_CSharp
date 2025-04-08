@@ -1,0 +1,58 @@
+﻿<Window x:Class="Lab3.Views.UsersWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:Lab3.ViewModels"
+        mc:Ignorable="d"
+        Title="Users Window" Height="450" Width="800">
+
+    <Window.DataContext>
+        <vm:UsersViewModel/>
+    </Window.DataContext>
+
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="0,0,0,10" VerticalAlignment="Center">
+            <TextBlock Text="Фільтр:" VerticalAlignment="Center"/>
+            <TextBox Text="{Binding FilterText, UpdateSourceTrigger=PropertyChanged}" 
+                     Width="150" Margin="10,0,0,0"/>
+
+            <TextBlock Text="Сортувати:" VerticalAlignment="Center" Margin="10,0,0,0"/>
+            <ComboBox ItemsSource="{Binding SortableProperties}" 
+                      SelectedItem="{Binding SelectedSortProperty}"
+                      Width="120" Margin="5,0,0,0"/>
+            <Button Content="Sort Asc" Command="{Binding SortAscCommand}" Margin="10,0,0,0"/>
+            <Button Content="Sort Desc" Command="{Binding SortDescCommand}" Margin="5,0,0,0"/>
+            <Button Content="Save" Command="{Binding SaveCommand}" Margin="10,0,0,0"/>
+        </StackPanel>
+
+        <DataGrid Grid.Row="1"
+                  ItemsSource="{Binding PeopleView}"
+                  SelectedItem="{Binding SelectedPerson}"
+                  AutoGenerateColumns="False"
+                  IsReadOnly="True">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="First Name" Binding="{Binding FirstName}"/>
+                <DataGridTextColumn Header="Last Name" Binding="{Binding LastName}"/>
+                <DataGridTextColumn Header="Email" Binding="{Binding Email}"/>
+                <DataGridTextColumn Header="BirthDate" Binding="{Binding BirthDate}"/>
+                <DataGridTextColumn Header="IsAdult" Binding="{Binding IsAdult}"/>
+                <DataGridTextColumn Header="SunSign" Binding="{Binding SunSign}"/>
+                <DataGridTextColumn Header="ChineseSign" Binding="{Binding ChineseSign}"/>
+                <DataGridTextColumn Header="IsBirthday" Binding="{Binding IsBirthday}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <StackPanel Orientation="Horizontal" Grid.Row="2" Margin="0,10,0,0">
+            <Button Content="Add" Command="{Binding AddCommand}" Width="80"/>
+            <Button Content="Edit" Command="{Binding EditCommand}" Width="80" Margin="10,0,0,0"/>
+            <Button Content="Delete" Command="{Binding DeleteCommand}" Width="80" Margin="10,0,0,0"/>
+        </StackPanel>
+    </Grid>
+</Window>
